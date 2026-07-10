@@ -1,0 +1,61 @@
+{
+  "skill_name": "conducting-gdpr-dpia",
+  "evals": [
+    {
+      "id": 1,
+      "name": "clear-trigger-biometric-login",
+      "prompt": "We want to add facial-recognition login for all EU employees to unlock their workstations. Do we need to do anything formal before launching, and if so can you run it for us?",
+      "expected_output": "Decision Required (Art. 35(3)(b) biometric special-category + WP248 #4/#7/#8), then a systematic description, necessity/proportionality, a risk register with inherent + residual levels, mitigations, and a DPO sign-off checklist. Article citations throughout; no invented cases.",
+      "assertions": [
+        {"text": "Emits an obligation decision of exactly 'Required' from the taxonomy Required / Not required / Recommended / Prior consultation required", "type": "objective"},
+        {"text": "Cites Art. 35 and identifies the Art. 35(3) trigger and/or the WP248 criteria met", "type": "objective"},
+        {"text": "Identifies biometric data as Art. 9 special category and flags employees as vulnerable data subjects", "type": "objective"},
+        {"text": "Produces a risk register scoring likelihood x severity and recomputes a residual level after mitigation", "type": "objective"},
+        {"text": "Tags every finding with at least one specific GDPR article citation", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"},
+        {"text": "Provides a process-maturity rating on the 0-4 scale", "type": "objective"},
+        {"text": "Includes a section naming what could not be assessed on the available evidence", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "residual-risk-forces-prior-consultation",
+      "prompt": "We run large-scale credit scoring on EU consumers using a new ML model that can deny loans automatically. Even after encryption and human review we think the risk to people stays high. Walk us through the DPIA and tell us whether we can just launch.",
+      "expected_output": "DPIA that ends in Prior consultation required because residual risk remains High/Very High after mitigation, citing Art. 36. Should score inherent and residual risk and not clear the launch.",
+      "assertions": [
+        {"text": "Concludes the decision is 'Prior consultation required' and cites Art. 36", "type": "objective"},
+        {"text": "Recomputes residual risk and shows it remains High or Very High despite mitigations", "type": "objective"},
+        {"text": "Identifies automated decision-making with significant effect (Art. 22 / WP248 #2) and profiling", "type": "objective"},
+        {"text": "Tags every finding with at least one specific GDPR article citation", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"},
+        {"text": "Includes a section naming what could not be assessed on the available evidence", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "not-required-low-risk",
+      "prompt": "We keep a simple internal spreadsheet of employee names and desk numbers for a 20-person EU office, updated manually. Do we need a DPIA?",
+      "expected_output": "Decision Not required (or Recommended at most) with reasoning that no Art. 35(3) trigger and fewer than two WP248 criteria are met. Should not manufacture high risk.",
+      "assertions": [
+        {"text": "Emits 'Not required' (or at most 'Recommended') and explains no Art. 35(3) trigger and <2 WP248 criteria apply", "type": "objective"},
+        {"text": "Does not invent a high-risk finding to justify a mandatory DPIA", "type": "objective"},
+        {"text": "Cites Art. 35 for the obligation analysis", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "near-miss-definition-question",
+      "prompt": "What is a DPIA and when was Article 35 introduced? Just curious, no project in mind.",
+      "expected_output": "A short factual explanation. The skill should recognize this is a definitional/trivia question, not a request to run a DPIA, and NOT produce a full assessment with a risk register.",
+      "assertions": [
+        {"text": "Recognizes this is a definitional question and does not run a full DPIA procedure with a risk register", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"}
+      ],
+      "files": []
+    }
+  ]
+}

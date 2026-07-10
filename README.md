@@ -9,7 +9,7 @@
 
 # gdpr-compliance-audit
 
-**An agent skill that audits anything you give it against the GDPR — and answers in *findings*, not vibes.**
+**A four-skill GDPR suite: a generalist auditor plus three procedural specialists (DPIA · DSAR · 72h breach) — all answering in *findings*, not vibes.**
 
 [![Install](https://img.shields.io/badge/npx-skills%20add%20TableSpark%2Fgdpr--compliance--audit-566F46?style=flat-square)](https://github.com/TableSpark/gdpr-compliance-audit)
 [![Benchmark](https://img.shields.io/badge/eval%20pass%20rate-100%25%20vs%2066.7%25%20baseline-3F5334?style=flat-square)](#05--performance-metrics)
@@ -62,25 +62,40 @@ declared unassessable instead of guessed.
 - It will **not assert volatile law** (DPF status, Digital Omnibus, AI Act timing) — it flags
   uncertainty and tells you to verify the live status.
 
-## 02 — What's inside
+## 02 — Skills in this pack
 
-<sub>ANATOMY &nbsp;·&nbsp; Fig. 02</sub>
+<sub>ONE INSTALL · FOUR SKILLS &nbsp;·&nbsp; Fig. 02</sub>
+
+One `npx skills add` installs the whole suite: a **generalist auditor** plus three
+**procedural specialists** — the workflows an audit tells you to go run. All four speak the
+same output contract (bare status values, per-finding article tags, 0–4 maturity,
+"could not be assessed"), and each specialist adds its own gated decision taxonomy.
+
+| Skill | Regime hook | Decision it drives | Final eval (with skill vs baseline) |
+|---|---|---|---|
+| **gdpr-compliance-audit** | whole-GDPR audit | `Compliant / Partial / Non-compliant / N/A` per finding | **100%** vs 66.7% |
+| **conducting-gdpr-dpia** | Art. 35 / WP248rev.01 | `Required / Not required / Recommended / Prior consultation required` | **100%** vs 64.5% |
+| **dsar-processing** | Art. 12, 15–22 | `Fulfil / Partially fulfil / Refuse / Extend / Need identity verification` per right | **100%** vs 82.5% |
+| **breach-72h-notification** | Art. 33–34 | `Notify SA / Notify SA + individuals / No notification (record only) / Insufficient info` | **100%** vs 77.5% |
+
+The trigger boundaries are drawn deliberately: the auditor flags "you need a DPIA" in one
+line; `conducting-gdpr-dpia` runs it. Breach/DSAR prompts route to the specialist, not the
+auditor — each description names its near-misses so the four don't fight over one prompt.
+
+Every skill follows the same five-part anatomy (borrowed from the
+[mukul975/Privacy-Data-Protection-Skills](https://github.com/mukul975/Privacy-Data-Protection-Skills)
+folder convention, with an evals/ suite added):
 
 ```
-skills/gdpr-compliance-audit/
-├── SKILL.md                    # trigger description · phased procedure · locked output contract
-├── references/
-│   ├── articles.md             # scope, principles, lawful bases, rights, obligations + article quick-map
-│   ├── audit-phases.md         # Phase 0 (scoping) → Phase 8 (findings) methodology + maturity scale
-│   └── current-landscape.md    # the volatile layer (DPF, Digital Omnibus, AI Act) — verify, don't assert
-├── scripts/
-└── evals/evals.json            # 6 test scenarios · 53 assertions — the skill's regression suite
+skills/<name>/
+├── SKILL.md                    # trigger description · procedure · locked output contract
+├── references/                 # the law, layered by decay rate — volatile parts flagged verify-don't-assert
+├── scripts/process.py          # stdlib-only determinism (deadline clocks, risk matrices, trigger counts)
+├── assets/template.md          # a filled real-world example of the output
+└── evals/evals.json            # contract assertions — the skill's regression suite
 ```
 
-The knowledge is layered by *decay rate*: `articles.md` is stable law (2018→), while
-`current-landscape.md` isolates everything in motion so it can be refreshed — and distrusted —
-independently. The `skills/<name>/` layout leaves room for sibling regime modules
-(CCPA, PIPL, UK DUAA).
+The `skills/<name>/` layout still leaves room for sibling regime modules (CCPA, PIPL, UK DUAA).
 
 ## 03 — Development process
 
@@ -166,8 +181,8 @@ CCPA near-miss (must decline) · 72-hour breach clock · access + erasure reques
 
 <sub>WHERE THIS GOES &nbsp;·&nbsp; Fig. 06</sub>
 
-- **Trigger tuning** — optimize the skill description against a ~20-query trigger eval set (over- and under-trigger cases).
-- **Sibling regimes** — the layout reserves space for `ccpa/`, `pipl/`, `uk-duaa/` reference modules.
+- **Trigger tuning** — optimize all four skill descriptions against a ~20-query trigger eval set (the near-misses matter most: DPIA-vs-audit, DSAR-vs-privacy-policy, breach-vs-general-security).
+- **Sibling regimes** — the layout reserves space for `ccpa/`, `pipl/`, `uk-duaa/` modules.
 - **`current-landscape.md` refresh cadence** — the volatile layer is designed to be replaced without touching the stable law.
 
 ## 07 — License & brand notice

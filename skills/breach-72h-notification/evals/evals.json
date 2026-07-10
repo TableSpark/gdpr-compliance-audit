@@ -1,0 +1,60 @@
+{
+  "skill_name": "breach-72h-notification",
+  "evals": [
+    {
+      "id": 1,
+      "name": "stolen-laptop-encryption-unknown",
+      "prompt": "ok so bad news - one of our sales guys had his laptop stolen out of his car last night and it had a spreadsheet with customer names, emails and order history on it. we're an online retailer with customers in Germany and France. do we actually have to report this? to who, and how long do we have? laptop might have been encrypted, not sure",
+      "expected_output": "Decision Insufficient info pending encryption confirmation, but the 72h clock (from awareness) is stated, the Art. 33 vs Art. 34 distinction is drawn, encryption is flagged as the pivotal fact to confirm, the lead-SA/cross-border question is raised, and the register entry is required regardless.",
+      "assertions": [
+        {"text": "Emits a decision from the taxonomy Notify SA / Notify SA + individuals / No notification (record only) / Insufficient info, and treats encryption status as the pivotal unknown", "type": "objective"},
+        {"text": "Cites Art. 33 and states the 72-hour deadline runs from awareness", "type": "objective"},
+        {"text": "Distinguishes notifying the authority (Art. 33) from communicating to individuals (Art. 34) based on high risk", "type": "objective"},
+        {"text": "Identifies encryption status as decision-changing and insists it be confirmed rather than assumed", "type": "objective"},
+        {"text": "Notes the breach must be recorded in the Art. 33(5) register even if not reportable", "type": "objective"},
+        {"text": "Raises the cross-border lead supervisory authority question (DE/FR)", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"},
+        {"text": "Includes a section naming what could not be assessed on the available evidence", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "encrypted-record-only",
+      "prompt": "A USB stick was lost. It held an export of EU customer data but it was full-disk encrypted with AES-256 and the passphrase was never on the device. Do we have to notify anyone?",
+      "expected_output": "Likely No notification (record only): strong encryption with safe keys makes the data unintelligible, so unlikely to result in a risk; individuals need not be told (Art. 34(3)(a)). But the Art. 33(5) register entry is still required.",
+      "assertions": [
+        {"text": "Decision is 'No notification (record only)' given strong encryption with uncompromised keys", "type": "objective"},
+        {"text": "Cites the Art. 34(3)(a) encryption exemption from communicating to individuals", "type": "objective"},
+        {"text": "States the breach must still be recorded under Art. 33(5)", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "high-risk-notify-individuals",
+      "prompt": "Our database was breached and an attacker exfiltrated plaintext health records and passwords for 50,000 EU users. What do we have to do?",
+      "expected_output": "Decision Notify SA + individuals: unencrypted special-category data at scale is high risk, so both Art. 33 (72h to SA) and Art. 34 (communicate to individuals) apply. Should mention what the Art. 34(2) communication must contain.",
+      "assertions": [
+        {"text": "Decision is 'Notify SA + individuals'", "type": "objective"},
+        {"text": "Cites Art. 33 (72h) and Art. 34 and explains high risk triggers individual communication", "type": "objective"},
+        {"text": "Identifies health data as special category raising the risk (Art. 9)", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"},
+        {"text": "Includes a section naming what could not be assessed on the available evidence", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "near-miss-general-security",
+      "prompt": "Are we following security best practices generally? Is our database encrypted at rest and are our backups fine?",
+      "expected_output": "This is a general security-posture question, not a breach that has occurred. The skill should recognize there is no breach to notify and not run the Art. 33/34 procedure (hand off to a security or audit flow).",
+      "assertions": [
+        {"text": "Recognizes no breach has occurred and does not run the breach-notification procedure", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"}
+      ],
+      "files": []
+    }
+  ]
+}

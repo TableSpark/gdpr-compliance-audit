@@ -9,7 +9,7 @@
 
 # gdpr-compliance-audit
 
-**一个 GDPR 合规审计智能体技能——输出的是*可查证的发现*，不是感觉。**
+**四技能 GDPR 套件：一个通用审计员 + 三个程序型专家（DPIA · DSAR · 72 小时泄露响应）——输出的都是*可查证的发现*，不是感觉。**
 
 [![Install](https://img.shields.io/badge/npx-skills%20add%20TableSpark%2Fgdpr--compliance--audit-566F46?style=flat-square)](https://github.com/TableSpark/gdpr-compliance-audit)
 [![Benchmark](https://img.shields.io/badge/%E8%AF%84%E6%B5%8B%E9%80%9A%E8%BF%87%E7%8E%87-100%25%20vs%20%E5%9F%BA%E7%BA%BF%2066.7%25-3F5334?style=flat-square)](#05--性能数据)
@@ -57,24 +57,39 @@ npx skills add TableSpark/gdpr-compliance-audit -a claude-code -g  # 仅 Claude 
 - **绝不把 GDPR 审计强加给范围之外的问题**（仅 CCPA、PIPL、无欧盟数据主体的场景）——它会说明 GDPR 不适用并停止。
 - **绝不断言易变的法律**（DPF 状态、Digital Omnibus、AI 法案时间表）——它会标记不确定性并提示你核实最新状态。
 
-## 02 — 目录结构
+## 02 — 套件包含的技能
 
-<sub>解剖图 &nbsp;·&nbsp; Fig. 02</sub>
+<sub>一次安装 · 四个技能 &nbsp;·&nbsp; Fig. 02</sub>
+
+一条 `npx skills add` 安装整个套件：一个**通用审计员**加三个**程序型专家**——即审计报告
+告诉你"接下来要去做"的那些流程。四个技能说同一种输出语言（裸状态值、逐条款引用、0–4
+成熟度、"无法评估"章节），每个专家再加一套自己的门控决策词表。
+
+| 技能 | 法条锚点 | 驱动的决策 | 最终评测（带技能 vs 基线） |
+|---|---|---|---|
+| **gdpr-compliance-audit** | 全 GDPR 审计 | 每条发现 `Compliant / Partial / Non-compliant / N/A` | **100%** vs 66.7% |
+| **conducting-gdpr-dpia** | Art. 35 / WP248rev.01 | `Required / Not required / Recommended / Prior consultation required` | **100%** vs 64.5% |
+| **dsar-processing** | Art. 12、15–22 | 每项权利 `Fulfil / Partially fulfil / Refuse / Extend / Need identity verification` | **100%** vs 82.5% |
+| **breach-72h-notification** | Art. 33–34 | `Notify SA / Notify SA + individuals / No notification (record only) / Insufficient info` | **100%** vs 77.5% |
+
+触发边界是刻意画出来的：审计员用一句话标记"你需要做 DPIA"，`conducting-gdpr-dpia` 负责把它
+跑完；泄露/DSAR 类问题路由给专家而不是审计员——每个技能的描述都写明了自己的近似排除项，
+四个技能不会抢同一个问题。
+
+每个技能都遵循同一套五件套结构（借鉴
+[mukul975/Privacy-Data-Protection-Skills](https://github.com/mukul975/Privacy-Data-Protection-Skills)
+的目录约定，并额外加上 evals/ 测试套件）：
 
 ```
-skills/gdpr-compliance-audit/
-├── SKILL.md                    # 触发描述 · 分阶段流程 · 锁定的输出契约
-├── references/
-│   ├── articles.md             # 适用范围、原则、合法性基础、权利、义务 + 条款速查表
-│   ├── audit-phases.md         # Phase 0（范围界定）→ Phase 8（发现汇总）方法论 + 成熟度量表
-│   └── current-landscape.md    # 易变层（DPF、Digital Omnibus、AI 法案）——核实而非断言
-├── scripts/
-└── evals/evals.json            # 6 个测试场景 · 53 条断言——本技能的回归测试套件
+skills/<name>/
+├── SKILL.md                    # 触发描述 · 流程 · 锁定的输出契约
+├── references/                 # 法条内容，按衰减速率分层——易变部分标注"核实而非断言"
+├── scripts/process.py          # 纯标准库的确定性计算（期限时钟、风险矩阵、触发计数）
+├── assets/template.md          # 一份填好的真实输出示例
+└── evals/evals.json            # 契约断言——本技能的回归测试套件
 ```
 
-知识按*衰减速率*分层：`articles.md` 是稳定的法律（2018 年至今），而 `current-landscape.md`
-把所有还在变动的内容隔离出来，便于独立刷新——以及独立地"不信任"。`skills/<name>/` 布局为
-姊妹法域模块（CCPA、PIPL、英国 DUAA）预留了空间。
+`skills/<name>/` 布局仍为姊妹法域模块（CCPA、PIPL、英国 DUAA）预留空间。
 
 ## 03 — 开发过程
 
@@ -156,8 +171,8 @@ skills/gdpr-compliance-audit/
 
 <sub>下一步 &nbsp;·&nbsp; Fig. 06</sub>
 
-- **触发调优**——用约 20 条触发评测（过触发/欠触发用例）优化技能描述。
-- **姊妹法域**——目录布局已为 `ccpa/`、`pipl/`、`uk-duaa/` 参考模块预留空间。
+- **触发调优**——用约 20 条触发评测优化全部四个技能的描述（近似场景最关键：DPIA-vs-审计、DSAR-vs-隐私政策、泄露-vs-一般安全）。
+- **姊妹法域**——目录布局已为 `ccpa/`、`pipl/`、`uk-duaa/` 模块预留空间。
 - **`current-landscape.md` 刷新节奏**——易变层设计为可整体替换，不触碰稳定法律层。
 
 ## 07 — 许可证与品牌声明

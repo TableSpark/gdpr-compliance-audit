@@ -1,0 +1,60 @@
+{
+  "skill_name": "dsar-processing",
+  "evals": [
+    {
+      "id": 1,
+      "name": "access-plus-erasure-mixed",
+      "prompt": "A user of our small EU app emailed today asking for a copy of everything we hold on them and to delete their account. We have no legal team. What must we do, by when, and can we say no to any of it?",
+      "expected_output": "Splits into Art. 15 access + Art. 17 erasure, states the one-month deadline from receipt (extension possible), requires identity verification, notes erasure is not absolute (legal-retention exception), and covers Art. 19 recipient notification. Per-right outcome from the taxonomy.",
+      "assertions": [
+        {"text": "Cites Art. 15 for access and Art. 17 for erasure", "type": "objective"},
+        {"text": "Assigns each right an outcome from the exact taxonomy Fulfil / Partially fulfil / Refuse / Extend / Need identity verification", "type": "objective"},
+        {"text": "States the one-month deadline runs from receipt and mentions the two-month extension with notice", "type": "objective"},
+        {"text": "Requires identity verification before disclosure and cites Art. 12(6)", "type": "objective"},
+        {"text": "Notes erasure is not absolute and names a valid Art. 17(3) exception", "type": "objective"},
+        {"text": "Mentions recipient/processor notification under Art. 19", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"},
+        {"text": "Includes a section naming what could not be assessed on the available evidence", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "erasure-refused-legal-retention",
+      "prompt": "A former customer in France wants us to erase ALL their data including their past invoices. We're required by tax law to keep invoices for several years. Can we refuse, fully or partly?",
+      "expected_output": "Partially fulfil: erase most data but retain invoices under Art. 17(3)(b) legal-obligation exception, clearly named. Should not refuse the whole request.",
+      "assertions": [
+        {"text": "Outcome is 'Partially fulfil' (not a blanket 'Refuse') for the erasure request", "type": "objective"},
+        {"text": "Names the Art. 17(3) legal-obligation exception as the basis for retaining invoices", "type": "objective"},
+        {"text": "Confirms the non-exempt data must still be erased", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"},
+        {"text": "Tags obligations with specific GDPR article citations", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "deadline-with-extension",
+      "prompt": "We received a very broad access request on 3 March from someone asking for every record across 8 systems. It'll take a while. When is our response actually due and what do we have to tell the requester?",
+      "expected_output": "One month from 3 March, extendable by two months for complexity, but the extension notice must be sent within the first month. Outcome Extend with the Art. 12(3) notice obligation.",
+      "assertions": [
+        {"text": "States the base deadline is one month from receipt (early April)", "type": "objective"},
+        {"text": "Explains the two-month extension for complexity and that notice must be given within the first month, citing Art. 12(3)", "type": "objective"},
+        {"text": "Uses the outcome value 'Extend'", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"}
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "near-miss-write-privacy-policy",
+      "prompt": "Can you write us a privacy policy for our new EU app from scratch?",
+      "expected_output": "This is content creation, not a rights-request to process. The skill should recognize it is not a DSAR and not produce a request-handling plan; ideally hand off to a privacy-policy drafting flow.",
+      "assertions": [
+        {"text": "Recognizes this is not a data-subject rights request and does not run the DSAR handling procedure", "type": "objective"},
+        {"text": "Does not fabricate specific fine amounts or named enforcement cases", "type": "objective"}
+      ],
+      "files": []
+    }
+  ]
+}
