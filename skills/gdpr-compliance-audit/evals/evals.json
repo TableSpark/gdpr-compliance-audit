@@ -1,0 +1,271 @@
+{
+  "skill_name": "gdpr-compliance-audit",
+  "evals": [
+    {
+      "id": 1,
+      "name": "policy-in-verdict-out",
+      "prompt": "We're a 30-person B2B SaaS based in Dublin. Here's our privacy policy text: 'We collect your name, email, company, and usage data to provide and improve our service. We may share data with our service providers. We keep data as long as needed. Contact us to exercise your rights.' Can you audit whether this meets GDPR and tell us what's missing?",
+      "expected_output": "Findings that flag the transparency gaps against Art. 13 (no lawful basis per purpose, no named recipients/third countries, no specific retention period, no mention of right to complain to a supervisory authority, vague 'improve our service' purpose), each with an article citation and a status. Should note what it cannot assess without more info rather than inventing compliance.",
+      "assertions": [
+        {
+          "text": "Cites Articles 13 and/or 12 for the transparency gaps",
+          "type": "objective"
+        },
+        {
+          "text": "Flags absence of a lawful basis stated per purpose",
+          "type": "objective"
+        },
+        {
+          "text": "Flags vague/indefinite retention ('as long as needed') as a storage-limitation/transparency issue",
+          "type": "objective"
+        },
+        {
+          "text": "Notes the missing right to lodge a complaint with a supervisory authority",
+          "type": "objective"
+        },
+        {
+          "text": "Does not fabricate specific fine amounts or named enforcement cases",
+          "type": "objective"
+        },
+        {
+          "text": "Distinguishes what it can assess from the text vs. what needs more evidence (e.g., the actual ROPA)",
+          "type": "objective"
+        },
+        {
+          "text": "Assigns each finding a status from the exact taxonomy Compliant / Partial / Non-compliant / N/A",
+          "type": "objective"
+        },
+        {
+          "text": "Tags every finding with at least one specific GDPR article citation",
+          "type": "objective"
+        },
+        {
+          "text": "Provides a maturity-by-domain rating on the 0-4 scale (0 Absent to 4 Measured/continuous)",
+          "type": "objective"
+        },
+        {
+          "text": "Includes a section naming what could not be assessed on the available evidence",
+          "type": "objective"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "vendor-transfer-audit",
+      "prompt": "Audit our international data transfers. We're an EU company. Our stack: customer data in AWS eu-central-1; a US-based analytics vendor (not sure if they're DPF-certified); a US email provider we signed SCCs with two years ago; and a support tool whose sub-processors we haven't mapped. Are we okay?",
+      "expected_output": "Transfer analysis under Art. 44-49 for each vendor: check adequacy/DPF status for the US analytics vendor, note SCCs require a Transfer Impact Assessment and that the DPF is under legal challenge so DPF-only reliance is a resilience risk, flag the unmapped sub-processors as an Art. 28 gap, and note eu-central-1 storage is intra-EEA. Article citations throughout.",
+      "assertions": [
+        {
+          "text": "Cites Chapter V transfer articles (44-49), including SCCs under Art. 46",
+          "type": "objective"
+        },
+        {
+          "text": "Identifies that SCC-based transfers require a Transfer Impact Assessment (post-Schrems II)",
+          "type": "objective"
+        },
+        {
+          "text": "Notes the DPF is contested / recommends an SCC fallback rather than DPF-only reliance",
+          "type": "objective"
+        },
+        {
+          "text": "Flags the unmapped support-tool sub-processors as an Art. 28 due-diligence gap",
+          "type": "objective"
+        },
+        {
+          "text": "Correctly treats AWS eu-central-1 storage as intra-EEA (not a restricted transfer by itself)",
+          "type": "objective"
+        },
+        {
+          "text": "Recommends verifying the analytics vendor's current DPF certification on the official list before relying on it",
+          "type": "objective"
+        },
+        {
+          "text": "Does not fabricate specific fine amounts or named enforcement cases",
+          "type": "objective"
+        },
+        {
+          "text": "Assigns each finding a status from the exact taxonomy Compliant / Partial / Non-compliant / N/A",
+          "type": "objective"
+        },
+        {
+          "text": "Tags every finding with at least one specific GDPR article citation",
+          "type": "objective"
+        },
+        {
+          "text": "Provides a maturity-by-domain rating on the 0-4 scale (0 Absent to 4 Measured/continuous)",
+          "type": "objective"
+        },
+        {
+          "text": "Includes a section naming what could not be assessed on the available evidence",
+          "type": "objective"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "ai-tool-in-stack",
+      "prompt": "We just wired a third-party LLM into our customer support flow \u2014 it reads incoming tickets (which contain names, emails, and sometimes health complaints about our product) and drafts replies. What are our GDPR obligations and gaps here?",
+      "expected_output": "Should flag likely special-category data (health), the need for a DPIA (Art. 35) for high-risk/new-tech processing, a lawful basis question, the processor/DPA relationship with the LLM vendor (Art. 28), transparency about automated processing, transfer questions if the vendor is non-EEA, and the AI Act \u00d7 GDPR interplay. Article citations; DPIA recommendation is the key expected move.",
+      "assertions": [
+        {
+          "text": "Identifies potential special-category (health) data and its heightened requirements (Art. 9)",
+          "type": "objective"
+        },
+        {
+          "text": "Recommends a DPIA and cites Art. 35",
+          "type": "objective"
+        },
+        {
+          "text": "Raises the processor relationship / need for an Art. 28 DPA with the LLM vendor",
+          "type": "objective"
+        },
+        {
+          "text": "Addresses lawful basis for the processing",
+          "type": "objective"
+        },
+        {
+          "text": "Mentions the AI Act interplay or that LLM processing rarely meets anonymization standards",
+          "type": "subjective"
+        },
+        {
+          "text": "Does not invent a specific fine or a specific EDPB decision as if it were settled fact",
+          "type": "objective"
+        },
+        {
+          "text": "Assigns each finding a status from the exact taxonomy Compliant / Partial / Non-compliant / N/A",
+          "type": "objective"
+        },
+        {
+          "text": "Tags every finding with at least one specific GDPR article citation",
+          "type": "objective"
+        },
+        {
+          "text": "Provides a maturity-by-domain rating on the 0-4 scale (0 Absent to 4 Measured/continuous)",
+          "type": "objective"
+        },
+        {
+          "text": "Includes a section naming what could not be assessed on the available evidence",
+          "type": "objective"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "near-miss-ccpa-should-stay-narrow",
+      "prompt": "We're a California company with only US customers. Help us get compliant with CCPA.",
+      "expected_output": "The skill should recognize this is a CCPA (California) request, not a GDPR audit, and either decline to force a GDPR analysis or clearly scope that it covers GDPR \u2014 offering to check GDPR only if EU data subjects are actually involved. It should NOT produce a full GDPR audit for a US-only, California-only scenario.",
+      "assertions": [
+        {
+          "text": "Recognizes CCPA is a different regime from GDPR and does not present a GDPR audit as the answer",
+          "type": "objective"
+        },
+        {
+          "text": "Correctly notes GDPR likely does not apply given no EU data subjects, or asks whether any EU users exist before proceeding",
+          "type": "objective"
+        },
+        {
+          "text": "Does not fabricate GDPR obligations for a purely US/California context",
+          "type": "objective"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "breach-72-hour-clock",
+      "prompt": "ok so bad news \u2014 one of our sales guys had his laptop stolen out of his car last night and it had a spreadsheet with customer names, emails and order history on it. we're an online retailer with customers in Germany and France. do we actually have to report this? to who, and how long do we have? laptop might have been encrypted, not sure",
+      "expected_output": "Breach analysis under Art. 33/34: the 72-hour clock to the supervisory authority runs from awareness, notification needed unless the breach is unlikely to risk individuals' rights; encryption status is the pivotal fact and must be established; separate Art. 34 decision about telling affected customers if high risk; internal breach register entry required regardless; identify the competent/lead supervisory authority question. No invented fines or cases.",
+      "assertions": [
+        {
+          "text": "Cites Art. 33 and states the 72-hour deadline for notifying the supervisory authority",
+          "type": "objective"
+        },
+        {
+          "text": "Distinguishes notifying the authority (Art. 33) from communicating to affected individuals (Art. 34) based on high risk",
+          "type": "objective"
+        },
+        {
+          "text": "Identifies encryption status as a key factor in the risk assessment and recommends confirming it",
+          "type": "objective"
+        },
+        {
+          "text": "Notes the breach must be recorded in an internal breach register even if not reportable",
+          "type": "objective"
+        },
+        {
+          "text": "Does not fabricate specific fine amounts or named enforcement cases",
+          "type": "objective"
+        },
+        {
+          "text": "Assigns each finding a status from the exact taxonomy Compliant / Partial / Non-compliant / N/A",
+          "type": "objective"
+        },
+        {
+          "text": "Tags every finding with at least one specific GDPR article citation",
+          "type": "objective"
+        },
+        {
+          "text": "Provides a maturity-by-domain rating on the 0-4 scale (0 Absent to 4 Measured/continuous)",
+          "type": "objective"
+        },
+        {
+          "text": "Includes a section naming what could not be assessed on the available evidence",
+          "type": "objective"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "dsar-access-plus-erasure",
+      "prompt": "a user emailed us asking for a copy of all the data we hold on them and to delete their account. we're a small EU app, no legal team. what are we legally required to do and by when? can we say no to any of it?",
+      "expected_output": "Explains the Art. 15 access right (copy of data + supplementary info) and Art. 17 erasure right, the one-month Art. 12 deadline (extendable by two months for complexity, with notice), identity verification, that erasure is not absolute (legal-obligation retention etc.), propagation to processors/recipients (Art. 19), and free of charge in most cases. Structured findings or a clear obligations checklist with article citations; no invented fines.",
+      "assertions": [
+        {
+          "text": "Cites Art. 15 for the access request and Art. 17 for the erasure request",
+          "type": "objective"
+        },
+        {
+          "text": "States the one-month response deadline (and mentions the possible two-month extension)",
+          "type": "objective"
+        },
+        {
+          "text": "Notes erasure is not absolute and names at least one valid exception (e.g., legal retention obligations)",
+          "type": "objective"
+        },
+        {
+          "text": "Mentions identity verification before fulfilling the request",
+          "type": "objective"
+        },
+        {
+          "text": "Mentions notifying recipients/processors of the erasure (Art. 19) or propagating deletion to vendors",
+          "type": "objective"
+        },
+        {
+          "text": "Does not fabricate specific fine amounts or named enforcement cases",
+          "type": "objective"
+        },
+        {
+          "text": "Assigns each finding a status from the exact taxonomy Compliant / Partial / Non-compliant / N/A",
+          "type": "objective"
+        },
+        {
+          "text": "Tags every finding with at least one specific GDPR article citation",
+          "type": "objective"
+        },
+        {
+          "text": "Provides a maturity-by-domain rating on the 0-4 scale (0 Absent to 4 Measured/continuous)",
+          "type": "objective"
+        },
+        {
+          "text": "Includes a section naming what could not be assessed on the available evidence",
+          "type": "objective"
+        }
+      ],
+      "files": []
+    }
+  ]
+}
