@@ -76,9 +76,7 @@ npx skills add TableSpark/gdpr-compliance-audit -a claude-code -g  # 仅 Claude 
 跑完；泄露/DSAR 类问题路由给专家而不是审计员——每个技能的描述都写明了自己的近似排除项，
 四个技能不会抢同一个问题。
 
-每个技能都遵循同一套五件套结构（借鉴
-[mukul975/Privacy-Data-Protection-Skills](https://github.com/mukul975/Privacy-Data-Protection-Skills)
-的目录约定，并额外加上 evals/ 测试套件）：
+每个技能都遵循同一套五件套结构：
 
 ```
 skills/<name>/

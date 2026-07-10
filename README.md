@@ -82,9 +82,7 @@ The trigger boundaries are drawn deliberately: the auditor flags "you need a DPI
 line; `conducting-gdpr-dpia` runs it. Breach/DSAR prompts route to the specialist, not the
 auditor — each description names its near-misses so the four don't fight over one prompt.
 
-Every skill follows the same five-part anatomy (borrowed from the
-[mukul975/Privacy-Data-Protection-Skills](https://github.com/mukul975/Privacy-Data-Protection-Skills)
-folder convention, with an evals/ suite added):
+Every skill follows the same five-part anatomy:
 
 ```
 skills/<name>/
