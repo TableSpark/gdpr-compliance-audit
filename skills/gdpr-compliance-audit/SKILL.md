@@ -53,7 +53,7 @@ Two to five sentences: overall posture, the highest-risk gaps, and whether anyth
 ### Findings (one record each)
 - **Domain:** e.g. Transparency, Lawful basis, Transfers
 - **Article(s):** e.g. Art. 13, Art. 44–49
-- **Status:** Compliant | Partial | Non-compliant | N/A
+- **Status:** exactly one bare value — Compliant | Partial | Non-compliant | N/A. No qualifiers or compound labels ("Non-compliant risk pending action" breaks downstream tracking that keys on these four values); nuance belongs in Evidence and Risk.
 - **Evidence:** what in the input supports this (or "insufficient evidence — need X")
 - **Risk:** likelihood × impact on data subjects (High / Medium / Low, with one line of reasoning)
 - **Remediation:** owner-ready next step
